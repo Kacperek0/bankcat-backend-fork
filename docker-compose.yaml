@@ -1,0 +1,50 @@
+version: '3.7'
+services:
+  backend:
+    container_name: bankcat-backend
+    image: ${DOCKER_REGISTRY}/bankcat-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    # volumes:
+    #   - ./:/var/www/html
+    ports:
+      - 9000:9000
+    expose:
+      - 9000
+    # networks:
+    #   - bankcat-network
+
+  nginx:
+    container_name: bankcat-nginx
+    image: ${DOCKER_REGISTRY}/bankcat-nginx
+    depends_on:
+      - backend
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    # volumes:
+    #   - ./nginx/logs:/var/log/nginx
+    #   - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    restart: unless-stopped
+    ports:
+      - 80:80
+    # networks:
+    #   - bankcat-network
+
+  mailhog:
+    container_name: bankcat-mailhog
+    image: mailhog/mailhog
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 1025:1025
+      - 8025:8025
+    # networks:
+    #   - bankcat-network
+
+# networks:
+#   bankcat-network:
+#     driver: bridge
