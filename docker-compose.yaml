@@ -14,8 +14,8 @@ services:
       - 9000:9000
     expose:
       - 9000
-    networks:
-      - bankcat-network
+    # networks:
+    #   - bankcat-network
 
   nginx:
     container_name: bankcat-nginx
@@ -31,8 +31,8 @@ services:
     restart: unless-stopped
     ports:
       - 80:80
-    networks:
-      - bankcat-network
+    # networks:
+    #   - bankcat-network
 
   mailhog:
     container_name: bankcat-mailhog
@@ -42,9 +42,9 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
-    networks:
-      - bankcat-network
+    # networks:
+    #   - bankcat-network
 
-networks:
-  bankcat-network:
-    driver: bridge
+# networks:
+#   bankcat-network:
+#     driver: bridge
